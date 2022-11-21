@@ -11,7 +11,6 @@
           {{item}}
         </v-tab>
         <v-spacer></v-spacer>
-   
       </v-tabs>
       
       <v-tabs-items v-model="tab">
@@ -20,20 +19,24 @@
           :key="item"
         >
           <v-sheet class="pa-5">
+            <div class="subtitle-1 font-weight-bold secondary-3--text mx-2 mb-2 mt-n2">{{data.type}}</div>
             <div class=""  v-if="tab==0">
-              <v-simple-table>
+              <v-simple-table >
                 <tbody>
                   <tr>
-                    <td class="subtitle-2 font-weight-normal secondary-3--text">Pickup Address:</td>
+                    <td class="subtitle-2 font-weight-normal secondary-3--text">
+                      {{data.type == TYPE_MOVE_FURNITURE ? 'Pickup Address:' : 'Address:'}}
+                    </td>
                     <td class="subtitle-2 font-weight-normal secondary-3--text">{{data.pickup_address}}</td>
                   </tr>
-                  <tr>
+                  <tr v-if="data.type == TYPE_MOVE_FURNITURE">
                     <td class="subtitle-2 font-weight-normal secondary-3--text">Drop-off Address:</td>
                     <td class="subtitle-2 font-weight-normal secondary-3--text">{{data.drop_off_address}}</td>
                   </tr>
                 </tbody>
               </v-simple-table>
-              <v-sheet width="300" class="my-5">
+             
+              <v-sheet width="300" class="my-5" v-if="data.type == TYPE_MOVE_FURNITURE">
                 <v-simple-table >
                   <tbody>
                     <tr>
@@ -49,7 +52,7 @@
               </v-sheet>
             
 
-              <v-sheet width="300" outlined class="pa-5 rounded">
+              <v-sheet width="300" outlined class="pa-5 rounded mt-2">
                 <div class="caption mb-2">More info</div>
                 <div class="subtitle-2 font-weight-normal secondary-3--text">{{data.instruction}}</div>
               </v-sheet>
@@ -97,6 +100,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { TYPE_MOVE_FURNITURE, TYPE_MAINTENANCE } from '@/plugins/constants.js'
 import { useServicesStore } from '@/store/services';
 const servicesStore = useServicesStore();
 
@@ -105,9 +109,10 @@ export default Vue.extend({
     tab: 0,
     items: [],
     data: null,
- 
-    tabs: ['Shipment Details', 'Appointment Details', 'Invoice Details'],
-    dialog: false
+    tabs: ['Service Details', 'Appointment Details', 'Invoice Details'],
+    dialog: false,
+    TYPE_MOVE_FURNITURE,
+    TYPE_MAINTENANCE,
   }),
   mounted() {
     servicesStore.showService(this.$route.query.id)
