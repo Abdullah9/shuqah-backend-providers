@@ -32,6 +32,10 @@ export default {
     ACTION: "ACTION",
     PRICE: "PRICE",
     STATUS: "STATUS",
+    'CUSTOMER NAME': "CUSTOMER NAME",
+    TYPE: "TYPE",
+    DATE: "DATE",
+    TIME: "TIME",
   },
   tabs: {
     'Assigned to me': 'Assigned to me',
