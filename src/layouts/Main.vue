@@ -76,9 +76,8 @@
       
       <v-list class="px-3 rounded-lg">
         <section v-for="(link, i) in $links" :key="i">
-          <v-list-item v-if="link.children.length==0" class="d-flex align-center"
-          :disabled="!link.role.includes(user.role)"
-          :class="!link.role.includes(user.role) ? 'd-none' : 'block'"
+          <v-list-item v-if="link.children.length==0"
+          :class="!link.role.includes(user.category.category.category) ? 'd-none' : 'd-flex align-center'"
           exact
           active-class="#555 rounded-lg"
           link
@@ -87,8 +86,7 @@
             <v-list-item-title class="mx-3 body-2 font-weight-medium white--text">{{$vuetify.lang.t(`$vuetify.${link.name}`)}}</v-list-item-title>
           </v-list-item>
           <v-list-group v-else color="#fff" 
-          :disabled="!link.role.includes(user.role)"
-          :class="!link.role.includes(user.role) ? 'd-none' : 'block'"
+          :class="!link.role.includes(user.category.category.category) ? 'd-none' : 'block'"
           >
             <template v-slot:activator>
               <v-icon size="18" color="#fff">{{link.icon}}</v-icon>
@@ -99,8 +97,8 @@
               class="ml-3"
               :to="{name: child.route}"
               exact-path
-              :class="!child.role.includes(user.role) ? 'd-none' : 'd-flex align-center'"
-              :disabled="!child.role.includes(user.role)"
+              :class="!child.role.includes(user.category.sub_category) ? 'd-none' : 'd-flex align-center'"
+              :disabled="!child.role.includes(user.category.sub_category)"
             >
               <v-icon size="16" color="#fff">{{child.icon}}</v-icon>
               <v-list-item-title class="ml-3 body-2 white--text font-weight-medium">{{child.name}}</v-list-item-title>
@@ -144,6 +142,7 @@ export default Vue.extend({
   }, 
   mounted() {
     // console.log(this.$vuetify.lang.current);
+    // console.log(this.user.category);
     this.$vuetify.lang.current = localStorage.getItem('lang')
     if(localStorage.getItem('rtl')) {
       this.$vuetify.rtl = localStorage.getItem('rtl') == 'false' ? false : true

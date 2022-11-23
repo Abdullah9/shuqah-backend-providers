@@ -6,14 +6,21 @@ export default {
         route: 'Banker Dashboard',
         icon: 'mdi-bell',
         children: [],
-        role: ['SUPER ADMIN', 'ADMIN', 'BANKER', 'PROVIDER']
+        role: ['PROVIDER', '']
       },
       {
         name: 'Services',
         route: 'services',
         icon: 'mdi-account-hard-hat',
         children: [],
-        role: ['SUPER ADMIN', 'ADMIN', 'BANKER', 'PROVIDER']
+        role: ['PROVIDER', 'Move Furniture', 'Maintenance']
+      },
+      {
+        name: 'Products',
+        route: 'products',
+        icon: 'mdi-cart',
+        children: [],
+        role: ['Home Furnishings']
       },
     ]
   }

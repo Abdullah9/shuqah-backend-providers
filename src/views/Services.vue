@@ -15,24 +15,29 @@
   </v-sheet>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
+<script>
 import ServicesTable from '@/components/ServicesTable.vue';
+import { useAuthStore } from '@/store/auth';
 import { useServicesStore } from '@/store/services'
 import { mapState } from 'pinia';
 const servicesStore = useServicesStore();
+const authStore = useAuthStore();
 
-export default Vue.extend({
+
+export default {
   components: { ServicesTable },
   computed: {
-    ...mapState(useServicesStore, ['services'])
+    ...mapState(useServicesStore, ['services']),
+    ...mapState(useAuthStore, ['user']),
+
   },  
   mounted() {
+    servicesStore.$state.type = this.user.category.category.category
+    servicesStore.$state.sub_type = this.user.category.sub_category
     servicesStore.getServices()
   },
   methods: {
     changeStatus(e) {
-      console.log(e);
       servicesStore.changeStatusService({...e})
       .then(res => {
         servicesStore.getServices()
@@ -48,5 +53,5 @@ export default Vue.extend({
       })
     }
   }
-})
+}
 </script>

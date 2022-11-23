@@ -43,7 +43,7 @@
                       <th class="subtitle-2 font-weight-normal secondary-3--text">Shipment Type</th>
                       <th class="subtitle-2 font-weight-normal secondary-3--text">Quantity</th>
                     </tr>
-                    <tr v-for="item in data.shipments" :key="item.id">
+                    <tr v-for="item in data?.shipments" :key="item.id">
                       <td class="subtitle-2 font-weight-normal secondary-3--text">{{item.name}}</td>
                       <td class="subtitle-2 font-weight-normal secondary-3--text">{{item.quantity}}</td>
                     </tr>
@@ -54,7 +54,7 @@
 
               <v-sheet width="300" outlined class="pa-5 rounded mt-2">
                 <div class="caption mb-2">More info</div>
-                <div class="subtitle-2 font-weight-normal secondary-3--text">{{data.instruction}}</div>
+                <div class="subtitle-2 font-weight-normal secondary-3--text">{{data?.instruction}}</div>
               </v-sheet>
             </div>
             <v-sheet width="200" class="" v-if="tab == 1">
@@ -105,15 +105,17 @@ import { useServicesStore } from '@/store/services';
 const servicesStore = useServicesStore();
 
 export default Vue.extend({
-  data: () => ({
-    tab: 0,
-    items: [],
-    data: null,
-    tabs: ['Service Details', 'Appointment Details', 'Invoice Details'],
-    dialog: false,
-    TYPE_MOVE_FURNITURE,
-    TYPE_MAINTENANCE,
-  }),
+  data(): any {
+    return {
+      tab: 0,
+      items: [],
+      data: [],
+      tabs: ['Service Details', 'Appointment Details', 'Invoice Details'],
+      dialog: false,
+      TYPE_MOVE_FURNITURE,
+      TYPE_MAINTENANCE,
+    }
+  },
   mounted() {
     servicesStore.showService(this.$route.query.id)
     .then(res => {

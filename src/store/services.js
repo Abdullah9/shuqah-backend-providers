@@ -6,13 +6,19 @@ export const useServicesStore = defineStore('services', {
   state: () => {
     return {
       services: [],
+      type: '',
+      sub_type: '',
       per_page: 10
     }
   },
 
   actions: {
     async getServices() {
-      await axiosInstance.get(`/provider/services?per_page=${this.per_page}`)
+      await axiosInstance.get(`/provider/services?
+      per_page=${this.per_page}
+      &type=${this.type}
+      &sub_type=${this.sub_type}
+      `)
       .then(res => {
         this.services = res.data.data
       })

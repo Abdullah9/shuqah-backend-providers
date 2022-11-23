@@ -5,7 +5,7 @@
       <tbody>
         <tr v-for="item in data.data" :key="item.id">
          
-          <td class="subtitle-2 font-weight-normal secondary-3--text">{{`${item.type}`}}</td>
+          <td class="subtitle-2 font-weight-normal secondary-3--text">{{`${item.type == 'Maintenance' ? `${item.type} (${item.sub_type})` : item.type }`}}</td>
           <td class="subtitle-2 font-weight-normal secondary-3--text">{{`${item.customer.name}`}}</td>
           <td class="subtitle-2 font-weight-normal secondary-3--text">{{`${item.date}`}}</td>
           <td class="subtitle-2 font-weight-normal secondary-3--text">{{`${item.time}`}}</td>

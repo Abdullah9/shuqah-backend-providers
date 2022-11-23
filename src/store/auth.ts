@@ -2,10 +2,28 @@ import { defineStore } from 'pinia'
 import { axiosInstance } from '@/plugins/axios'
 import router from "@/router"
 
+type Category = {
+  category_id: string,
+  sub_category: string,
+}
+
+type User = {
+  id: string,
+  name: string,
+  email: string,
+  role: string,
+  category: Array<Category> | []
+}
+
+interface State {
+  user: User | null
+}
+
 export const useAuthStore = defineStore('authentication', {
-  state: () => {
+  state: (): State => {
     return {
-      user: []
+      // user: new Array<any>[],
+      user: null
     }
   },
 
@@ -19,7 +37,7 @@ export const useAuthStore = defineStore('authentication', {
           resolve(res.data.data);
         })
         .catch(err => {
-          this.errors = err.response.data.errors
+          // this.errors = err.response.data.errors
           reject(err.response.data.errors)
         })
       }) 
@@ -38,7 +56,7 @@ export const useAuthStore = defineStore('authentication', {
       await axiosInstance.get('/user')
       .then(res => {
         this.user = res.data
-        if(!this.user.role) return router.push({ name: "Mobile Complete Information" })
+        if(!this.user?.role) return router.push({ name: "Mobile Complete Information" })
       })
       .catch(err => {
         // this.signOut()

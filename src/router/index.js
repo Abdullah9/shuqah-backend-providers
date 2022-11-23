@@ -2,7 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import middlewarePipeline from './middleware-pipeline'
 import { middleware } from './middleware'
-
+import { useAuthStore } from '@/store/auth'
+import { createPinia, PiniaVuePlugin } from 'pinia'
+const pinia = createPinia()
 Vue.use(VueRouter)
 
 const routes = [
@@ -13,7 +15,6 @@ const routes = [
     },
     beforeEnter: (to, from, next) => {
       const locale = to.params.locale;
-      console.log(locale);
       const locales = ['en', 'ar']
       if(!locales.includes(locale)) return next('en/login')
       return next()
@@ -33,11 +34,31 @@ const routes = [
             name: 'services',
             component: () => import('../views/Services.vue'),
             meta:{ middleware: [middleware] },
+            beforeEnter: (to, from, next) => {
+              const store = useAuthStore(pinia)
+              const roles = ['Move Furniture', 'Maintenance'];
+              store.auth().then(() => {
+                if(!roles.includes(store.user.category.category.category)) {
+                  const locale = to.params.locale;
+                  const locales = ['en', 'ar']
+                  if(!locales.includes(locale)) return next('/en/products')
+                  return next('products')
+                }
+                return next()
+                
+              })
+            },
           },
           {
             path: 'service',
             name: 'service-details',
             component: () => import('../views/ServiceDetails.vue'),
+            meta:{ middleware: [middleware] },
+          },
+          {
+            path: 'products',
+            name: 'products',
+            component: () => import('../views/Products.vue'),
             meta:{ middleware: [middleware] },
           },
         ]
