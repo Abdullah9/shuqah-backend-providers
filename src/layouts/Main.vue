@@ -20,12 +20,6 @@
         <v-btn icon small >
           <v-icon size="20">mdi-account-circle</v-icon>
         </v-btn>
-        <!-- <v-btn icon small class="mx-1">
-          <v-icon size="20">mdi-cog</v-icon>
-        </v-btn>
-        <v-btn icon small>
-          <v-icon size="20">mdi-bell</v-icon>
-        </v-btn> -->
         <v-menu open-on-hover bottom offset-y min-width="130">
           <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -52,9 +46,7 @@
 
     <v-navigation-drawer v-model="drawer" app floating width="250" class="drawer" color="dark-1">
       <template v-slot:prepend>
-        <div class="white--text text-h4 font-weight-bold text-center py-10">
-          <!-- Sheqaa -->
-        </div>
+        <div class="white--text text-h4 font-weight-bold text-center py-10"></div>
         <hr class="mx-4">
         <v-list dark class="px-3">
           <v-list-group color="#fff" class="">

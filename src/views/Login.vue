@@ -39,13 +39,10 @@
       <v-app-bar absolute bottom color="light" class="elevation-0 mx-5 body-2 secondary-1--text">
         <div class="">© 2022</div>
         <v-spacer/>
-        
         <div class="">About us</div>
         <div class=" mx-5">Blog</div>
         <div class="">License</div>
-
       </v-app-bar>
-      
     </v-main>
   </v-app>
 </template>
@@ -66,9 +63,9 @@ export default Vue.extend({
   methods: {
     submit() {
       authStore.login(this.form)
-      .then(() => {
-        this.$router.push('services')
-      },(errors) => {
+      .then((res) => { 
+        console.log(res)
+       },(errors) => {
         this.errors = errors
       })
     }

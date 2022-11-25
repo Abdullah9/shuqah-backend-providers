@@ -29,11 +29,10 @@ export default {
   computed: {
     ...mapState(useServicesStore, ['services']),
     ...mapState(useAuthStore, ['user']),
-
   },  
   mounted() {
     servicesStore.$state.type = this.user.category.category.category
-    servicesStore.$state.sub_type = this.user.category.sub_category
+    servicesStore.$state.sub_type = this.user.category.sub_category ? this.user.category.sub_category : ''
     servicesStore.getServices()
   },
   methods: {

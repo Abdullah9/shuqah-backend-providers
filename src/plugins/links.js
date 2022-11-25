@@ -1,3 +1,5 @@
+import { TYPE_DECORATIONS, TYPE_ELECTRONIC_DEVICES, TYPE_HOME_FURNISHINGS, TYPE_MAINTENANCE, TYPE_MOVE_FURNITURE } from "./constants"
+
 export default {
   install(Vue) {
     Vue.prototype.$links = [
@@ -13,14 +15,22 @@ export default {
         route: 'services',
         icon: 'mdi-account-hard-hat',
         children: [],
-        role: ['PROVIDER', 'Move Furniture', 'Maintenance']
+        role: [TYPE_MOVE_FURNITURE, TYPE_MAINTENANCE]
       },
+     
       {
         name: 'Products',
         route: 'products',
+        icon: 'mdi-server',
+        children: [],
+        role: [TYPE_ELECTRONIC_DEVICES, TYPE_HOME_FURNISHINGS, TYPE_DECORATIONS]
+      },
+      {
+        name: 'Orders',
+        route: 'orders',
         icon: 'mdi-cart',
         children: [],
-        role: ['Home Furnishings']
+        role: [ TYPE_ELECTRONIC_DEVICES, TYPE_HOME_FURNISHINGS, TYPE_DECORATIONS]
       },
     ]
   }
