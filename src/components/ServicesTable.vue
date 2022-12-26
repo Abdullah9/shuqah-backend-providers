@@ -14,7 +14,7 @@
               @click="$router.push({ name: 'service-details', query: { id: item.id } })"
               class="subtitle-2 secondary-3--text text-capitalize" 
             >
-              View
+              {{ $vuetify.lang.t('$vuetify.View') }}
             </v-btn>
             <v-menu offset-y>
               <template v-slot:activator="{ on, attrs }">
@@ -22,9 +22,8 @@
                   v-bind="attrs"
                   v-on="on"
                   class="subtitle-2 secondary-3--text text-capitalize" 
-              
                 >
-                  Change Status
+                  {{ $vuetify.lang.t('$vuetify.Change Status') }}
                 </v-btn>
               </template>
               <v-list dense>
@@ -45,7 +44,8 @@
                   v-on="on" text small  
                   class="subtitle-2 secondary-3--text text-capitalize" 
                 >
-                  Send Offer
+                  
+                  {{ $vuetify.lang.t('$vuetify.Send Offer') }}
                 </v-btn>
               </template>
               <PriceOffer :id="item.id"/>

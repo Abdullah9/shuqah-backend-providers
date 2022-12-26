@@ -79,9 +79,32 @@
   font-display: swap;
   src: url('../fonts/Rubik-Bold.ttf') format('truetype');
 }
+@font-face {
+  font-family: 'Cairo', sans-serif;
+  font-style:normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/Cairo-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Cairo', sans-serif;
+  font-style:normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/Cairo-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Cairo', sans-serif;
+  font-style:normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/Cairo-Bold.ttf') format('truetype');
+}
 
 .v-application {
-  font-family: 'Roboto' !important;
+  font-family: 'Cairo', sans-serif !important;
   .caption,
   .body-1,
   .body-2,
@@ -96,10 +119,10 @@
   .button,
   .body-2,
   .body-1 {
-    font-family: 'Roboto' !important;
+    font-family: 'Cairo', sans-serif !important;
   }
   .button {
-    font-family: 'Roboto' !important;
+    font-family: 'Cairo', sans-serif !important;
     font-weight: 700 !important;
   }
   .font-weight-medium {

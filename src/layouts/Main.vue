@@ -1,19 +1,11 @@
 <template>
-    <v-app v-if="!loading">
+  <v-app v-if="!loading">
     <v-app-bar app flat class="main" height="80">
       <div class="">
-        <div class="d-flex align-center grey--text body-2 mb-n2">
-          <v-btn icon small class="mb-n1" to="/admin" exact>
-            <v-icon size="16">mdi-home</v-icon>
-          </v-btn>
-          <div class="ml-n1 mr-1 mt-1">/</div>
-          <div class="mt-1 caption font-weight-medium text-capitalize">{{$route.name}}</div>
-        </div>
         <div class="d-flex align-center">
-          <div class="mx-2 subtitle-1 font-weight-medium text-capitalize">{{$route.name}}</div>
+          <div class="mx-2 subtitle-1 font-weight-medium">{{$vuetify.lang.t(`$vuetify.${$route.name}`)}}</div>
           <v-app-bar-nav-icon @click="drawer=true"></v-app-bar-nav-icon>
         </div>
-        
       </div>
       <v-spacer/>
       <div class="">
@@ -44,21 +36,23 @@
       </div>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" app floating width="250" class="drawer" color="dark-1">
+    <v-navigation-drawer v-model="drawer" app floating width="250" class="drawer">
       <template v-slot:prepend>
-        <div class="white--text text-h4 font-weight-bold text-center py-10"></div>
+        <div class="d-flex justify-center">
+          <v-img :src="require('@/assets/images/logo.png')" max-height="100" max-width="120" />
+        </div>
         <hr class="mx-4">
-        <v-list dark class="px-3">
-          <v-list-group color="#fff" class="">
+        <v-list class="px-3">
+          <v-list-group class="">
             <template v-slot:activator>
               <v-avatar size="28">
                 <v-img :src="require('@/assets/images/profile-picture.png')"></v-img>
               </v-avatar>
-              <v-list-item-title class="mx-3 body-2 font-weight-medium">{{$vuetify.lang.t('$vuetify.Provider')}}</v-list-item-title>
+              <v-list-item-title class="mx-3 body-2 grey--text text--darken-2 font-weight-medium">{{$vuetify.lang.t('$vuetify.Provider')}}</v-list-item-title>
             </template>
             <v-list-item class="ml-3" @click="logout" link >
               <v-icon size="18">mdi-toggle-switch-variant-off</v-icon>
-              <v-list-item-title class="ml-3 body-2 font-weight-medium">{{$vuetify.lang.t('$vuetify.Logout')}}</v-list-item-title>
+              <v-list-item-title class="mx-3 body-2 grey--text text--darken-2 font-weight-medium">{{$vuetify.lang.t('$vuetify.Logout')}}</v-list-item-title>
             </v-list-item>
           </v-list-group>
         </v-list>
@@ -66,7 +60,7 @@
         <hr class="mx-4">
       </template>
       
-      <v-list class="px-3 rounded-lg">
+      <v-list flat class="px-3 rounded-lg">
         <section v-for="(link, i) in $links" :key="i">
           <v-list-item v-if="link.children.length==0"
           :class="!link.role.includes(user.category.category.category) ? 'd-none' : 'd-flex align-center'"
@@ -74,15 +68,19 @@
           active-class="#555 rounded-lg"
           link
           :to="{name: link.route}">
-            <v-icon size="18" color="#fff">{{link.icon}}</v-icon>
-            <v-list-item-title class="mx-3 body-2 font-weight-medium white--text">{{$vuetify.lang.t(`$vuetify.${link.name}`)}}</v-list-item-title>
+            <v-icon size="18" :color="$route.name === link.route ? 'success' : '#666'">{{link.icon}}</v-icon>
+            <v-list-item-title class="mx-3 body-2 font-weight-medium"
+            :class="$route.name === link.route ? 'success--text' : 'grey--text text--darken-2'"
+            >{{$vuetify.lang.t(`$vuetify.${link.name}`)}}</v-list-item-title>
           </v-list-item>
           <v-list-group v-else color="#fff" 
           :class="!link.role.includes(user.category.category.category) ? 'd-none' : 'block'"
           >
             <template v-slot:activator>
-              <v-icon size="18" color="#fff">{{link.icon}}</v-icon>
-              <v-list-item-title class="mx-3 body-2 white--text font-weight-medium">{{$vuetify.lang.t(`$vuetify.${link.name}`)}}</v-list-item-title>
+              <v-icon size="18" :color="$route.name === link.route ? 'success' : '#666'">{{link.icon}}</v-icon>
+              <v-list-item-title class="mx-3 body-2 font-weight-medium"
+              :class="$route.name === link.route ? 'success--text' : 'grey--text text--darken-2'"
+              >{{$vuetify.lang.t(`$vuetify.${link.name}`)}}</v-list-item-title>
             </template>
             <v-list-item v-for="(child, j) in link.children" 
               :key="j" 
@@ -92,8 +90,10 @@
               :class="!child.role.includes(user.category.sub_category) ? 'd-none' : 'd-flex align-center'"
               :disabled="!child.role.includes(user.category.sub_category)"
             >
-              <v-icon size="16" color="#fff">{{child.icon}}</v-icon>
-              <v-list-item-title class="ml-3 body-2 white--text font-weight-medium">{{child.name}}</v-list-item-title>
+              <v-icon size="16" :color="$route.name === link.route ? 'success' : '#666'">{{child.icon}}</v-icon>
+              <v-list-item-title class="mx-3 body-2 font-weight-medium"
+              :class="$route.name === child.route ? 'success--text' : 'grey--text text--darken-2'"
+              >{{child.name}}</v-list-item-title>
             </v-list-item>
           </v-list-group>
         </section>
@@ -133,8 +133,6 @@ export default Vue.extend({
     ...mapState(useAuthStore, ['user']),
   }, 
   mounted() {
-    // console.log(this.$vuetify.lang.current);
-    // console.log(this.user.category);
     this.$vuetify.lang.current = localStorage.getItem('lang')
     if(localStorage.getItem('rtl')) {
       this.$vuetify.rtl = localStorage.getItem('rtl') == 'false' ? false : true
